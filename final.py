@@ -1,3 +1,4 @@
+import random
 import pygame
 ##################반드시 해야하는것###########################################
 pygame.init() # 초기화 (반드시 필요)
@@ -19,6 +20,9 @@ clock = pygame.time.Clock()
 #배경이미지 불러오기
 background = pygame.image.load("C:/Users/Wookmawang/Desktop/공부/makegame/pygame_basic/background.png")
 
+#게임 종료 화면
+gameend = pygame.image.load("C:/Users/Wookmawang/Desktop/공부/makegame/pygame_basic/gameend.png")
+
 # 캐릭터 불러오기 
 character = pygame.image.load("C:/Users/Wookmawang/Desktop/공부/makegame/pygame_basic/character.jpg")
 character_size = character.get_rect().size # 이미지 크기를 구해옴
@@ -34,29 +38,64 @@ to_y = 0
 # 이동 속도
 character_speed = 0.6
 
-# 적 캐릭터 만들기
+# 떨어지는 창유성 만들기
+
 enemy = pygame.image.load("C:/Users/Wookmawang/Desktop/공부/makegame/pygame_basic/enemy.jpg")
 enemy_size = enemy.get_rect().size # 이미지 크기를 구해옴
 enemy_width = enemy_size[0] #캐릭터 가로크기
 enemy_height = enemy_size[1] #캐릭터 세로크기
-enemy_x_pos = (screen_width / 2) - (enemy_width / 2) #화면 가로의 ㄱ절반 크기에 해당하는 곳에 위치
-enemy_y_pos = (screen_height /2) - (enemy_height /2) #화면 세로의 가장아래 해당하는 곳에 위치
+enemy_x_pos =  random.randint(0, screen_width - enemy_width) #화면 가로의 절반 크기에 해당하는 곳에 위치
+enemy_y_pos =  0 #화면 세로의 가장아래 해당하는 곳에 위치
+enemy_speed = 4
+
+enemy2 = pygame.image.load("C:/Users/Wookmawang/Desktop/공부/makegame/pygame_basic/enemy.jpg")
+enemy_size2 = enemy2.get_rect().size # 이미지 크기를 구해옴
+enemy_width = enemy_size[0] #캐릭터 가로크기
+enemy_height = enemy_size[1] #캐릭터 세로크기
+enemy_x_pos2 =  random.randint(0, screen_width - enemy_width) #화면 가로의 절반 크기에 해당하는 곳에 위치
+enemy_y_pos2 =  0 #화면 세로의 가장아래 해당하는 곳에 위치
+enemy_speed2 = 6
+
+enemy3 = pygame.image.load("C:/Users/Wookmawang/Desktop/공부/makegame/pygame_basic/enemy.jpg")
+enemy_size3 = enemy3.get_rect().size # 이미지 크기를 구해옴
+enemy_width = enemy_size[0] #캐릭터 가로크기
+enemy_height = enemy_size[1] #캐릭터 세로크기
+enemy_x_pos3 =  random.randint(0, screen_width - enemy_width) #화면 가로의 절반 크기에 해당하는 곳에 위치
+enemy_y_pos3 =  0 #화면 세로의 가장아래 해당하는 곳에 위치
+enemy_speed3 = 8
+
+enemy4 = pygame.image.load("C:/Users/Wookmawang/Desktop/공부/makegame/pygame_basic/enemy.jpg")
+enemy_size4 = enemy4.get_rect().size # 이미지 크기를 구해옴
+enemy_width = enemy_size[0] #캐릭터 가로크기
+enemy_height = enemy_size[1] #캐릭터 세로크기
+enemy_x_pos4 =  random.randint(0, screen_width - enemy_width) #화면 가로의 절반 크기에 해당하는 곳에 위치
+enemy_y_pos4 =  0 #화면 세로의 가장아래 해당하는 곳에 위치
+enemy_speed4 = 9
+
+enemy5 = pygame.image.load("C:/Users/Wookmawang/Desktop/공부/makegame/pygame_basic/enemy.jpg")
+enemy_size5 = enemy5.get_rect().size # 이미지 크기를 구해옴
+enemy_width = enemy_size[0] #캐릭터 가로크기
+enemy_height = enemy_size[1] #캐릭터 세로크기
+enemy_x_pos5 =  random.randint(0, screen_width - enemy_width) #화면 가로의 절반 크기에 해당하는 곳에 위치
+enemy_y_pos5 =  0 #화면 세로의 가장아래 해당하는 곳에 위치
+enemy_speed5 = 9
 
 # 폰트 정의
 game_font = pygame.font.Font(None, 40) # 폰트 객체 생성 (폰트, 크기)
 
 # 총시간
-total_time = 10
-
+total_time = 0
 # 시작 시간정보
 start_ticks = pygame.time.get_ticks() #현재 시간 tick 을 받아옴
+
 
 # 이벤트 루프 
 running = True # 게임이 진행중인가?
 while running: # 게임 진행중인 동안에
  
     dt = clock.tick(60) # 게임 화면 초당 프레임수 설정
-
+    elapsed_time = (pygame.time.get_ticks() - start_ticks) / 100
+    timer = game_font.render(str(int(total_time + elapsed_time)), True,(255, 255, 255))
 
 #캐릭터가 100만큼 이동해야함
 #10 fps : 1초 동안에 10번 동작 -> 1번에 몇만큼 이동? 10만큼! 10 * 10 = 100
@@ -84,6 +123,41 @@ while running: # 게임 진행중인 동안에
     character_x_pos += to_x * dt
     character_y_pos += to_y * dt
 
+    enemy_y_pos += enemy_speed
+
+    
+    if enemy_y_pos > screen_height:
+        enemy_y_pos = 0
+        enemy_x_pos = random.randint(0, screen_width - enemy_width)
+    
+    if elapsed_time > 30:
+        enemy_y_pos2 += enemy_speed2
+
+        if enemy_y_pos2 > screen_height:
+            enemy_y_pos2 = 0
+            enemy_x_pos2 = random.randint(0, screen_width - enemy_width)
+
+    if elapsed_time > 70:
+        enemy_y_pos3 += enemy_speed3
+
+        if enemy_y_pos3 > screen_height:
+            enemy_y_pos3 = 0
+            enemy_x_pos3 = random.randint(0, screen_width - enemy_width)
+
+    if elapsed_time > 150:
+        enemy_y_pos4 += enemy_speed4
+
+        if enemy_y_pos4 > screen_height:
+            enemy_y_pos4 = 0
+            enemy_x_pos4 = random.randint(0, screen_width - enemy_width)
+
+    if elapsed_time > 200:
+        enemy_y_pos5 += enemy_speed5
+
+        if enemy_y_pos5 > screen_height:
+            enemy_y_pos5 = 0
+            enemy_x_pos5 = random.randint(0, screen_width - enemy_width)
+
     #캐릭터 화면 밖으로 못나가게 하는것임
     if character_x_pos < 0:
         character_x_pos = 0
@@ -105,39 +179,67 @@ while running: # 게임 진행중인 동안에
     enemy_rect.left = enemy_x_pos
     enemy_rect.top = enemy_y_pos
 
+    enemy_rect2 = enemy2.get_rect()
+    enemy_rect2.left = enemy_x_pos2
+    enemy_rect2.top = enemy_y_pos2
+    
+    enemy_rect3 = enemy3.get_rect()
+    enemy_rect3.left = enemy_x_pos3
+    enemy_rect3.top = enemy_y_pos3
+
+    enemy_rect4 = enemy4.get_rect()
+    enemy_rect4.left = enemy_x_pos4
+    enemy_rect4.top = enemy_y_pos4
+
+    enemy_rect5 = enemy4.get_rect()
+    enemy_rect5.left = enemy_x_pos5
+    enemy_rect5.top = enemy_y_pos5
+
+    screen.blit(background, (0, 0))
     # 충돌 체크
-    if character_rect.colliderect(enemy_rect):
+    
+    if character_rect.colliderect(enemy_rect) or character_rect.colliderect(enemy_rect2) or character_rect.colliderect(enemy_rect3) or character_rect.colliderect(enemy_rect4):
+        
+        screen.blit(gameend, (0, 0)) # 충돌시배경화면 기존 배경화면 아래에 써야 이게 반응하네
         print("충돌 했어요")
-        running = False
-
-
-    screen.blit(background, (0, 0)) #배경 그리기
+        running = False #배경 그리기
 
     screen.blit(character, (character_x_pos, character_y_pos)) #캐릭터 그리기
-
-    screen.blit(enemy, (enemy_x_pos, enemy_y_pos)) # 
     
     # 타이머 집어 넣기
     # 경과시간 계산
-    elapsed_time = (pygame.time.get_ticks() - start_ticks) / 1000 
+    
     #경과시간을 1000으로 나눠서 초단위로 표시 밀리세컨드를 초로 바꿈
-
-    timer = game_font.render(str(int(total_time - elapsed_time)), True,(255, 255, 255))
     # 처음에 렌더 뒤에 들어가는가는 출력할 시간정보 , True, 글자 색상
+    
+    
+
 
     screen.blit(timer, (10, 10))
 
+    screen.blit(enemy, (enemy_x_pos, enemy_y_pos))
+    if elapsed_time > 20:
+        screen.blit(enemy2, (enemy_x_pos2, enemy_y_pos2))
+    if elapsed_time > 60:
+        screen.blit(enemy3, (enemy_x_pos3, enemy_y_pos3))
+    if elapsed_time > 140:
+        screen.blit(enemy4, (enemy_x_pos4, enemy_y_pos4))
+    if elapsed_time > 190:
+        screen.blit(enemy5, (enemy_x_pos5, enemy_y_pos5))
+        
+            
+
     # 만약 시간이 0이하이면 게임종료
-    if total_time - elapsed_time <= 0:
-        print("타임아웃")
-        running = False
+    #if total_time - elapsed_time <= 0:
+    #    print("타임아웃")
+    #    running = False
     
 
 
     pygame.display.update() # 게임화면 꼐속 그리게 하는것 이거 무조건 있어야함
 
 # 잠시 대기 
-pygame.time.delay(2000) #2초정도 대기 (ms)
+pygame.time.delay(5000) #5초정도 대기 (ms)
 
 # pygame 종료
 pygame.quit()
